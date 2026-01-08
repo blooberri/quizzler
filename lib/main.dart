@@ -27,6 +27,19 @@ class Quiz extends StatefulWidget {
 }
 
 class _QuizState extends State<Quiz> {
+  List<String> questions = [
+    'Mount Everest is the tallest mountain in the world',
+    'The Great Wall of China can be seen from the Moon with the naked eye.',
+    'The capital city of Australia is Sydney',
+    'Sound travels faster in air than it does in water.',
+    'Jupiter is the closest planet to the Sun',
+    'An adult human skeleton has more bones than a baby\'s skeleton',
+  ];
+  List<bool> answers = [true, false, false, false, false, false];
+  //TODO: Add a score keeper
+  List<Icons> score = [];
+
+  int questionNumber = 0;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -38,7 +51,7 @@ class _QuizState extends State<Quiz> {
             padding: EdgeInsets.all(10),
             child: Center(
               child: Text(
-                'Sahara Desert is the largest desert in the world!',
+                questions[questionNumber],
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 25.0, color: Colors.white),
               ),
@@ -50,7 +63,17 @@ class _QuizState extends State<Quiz> {
             padding: EdgeInsets.all(15.0),
             child: TextButton(
               style: TextButton.styleFrom(backgroundColor: Colors.green),
-              onPressed: () {},
+              onPressed: () {
+                bool correctAnswer = answers[questionNumber];
+                if(correctAnswer == true){
+                  print('Correct');
+                }else{
+                  print('Incorrect');
+                }
+                setState(() {
+                  questionNumber++;
+                });
+              },
               child: Text(
                 'True',
                 style: TextStyle(color: Colors.white, fontSize: 20.0),
@@ -63,7 +86,18 @@ class _QuizState extends State<Quiz> {
             padding: EdgeInsets.all(15.0),
             child: TextButton(
               style: TextButton.styleFrom(backgroundColor: Colors.red),
-              onPressed: () {},
+              onPressed: () {
+                bool correctAnswer = answers[questionNumber];
+                if(correctAnswer == true){
+                  print('Incorrect');
+                }else{
+                  print('Correct');
+                }
+                setState(() {
+                  questionNumber++;
+                });
+                print(questionNumber);
+              },
               child: Text(
                 'False',
                 style: TextStyle(color: Colors.white, fontSize: 20.0),
@@ -71,6 +105,8 @@ class _QuizState extends State<Quiz> {
             ),
           ),
         ),
+        //TODO: Add a score keeper
+        Row(),
       ],
     );
   }
