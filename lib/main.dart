@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quizzler/questions.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,17 +28,29 @@ class Quiz extends StatefulWidget {
 }
 
 class _QuizState extends State<Quiz> {
-  List<String> questions = [
-    'Mount Everest is the tallest mountain in the world',
-    'The Great Wall of China can be seen from the Moon with the naked eye.',
-    'The capital city of Australia is Sydney',
-    'Sound travels faster in air than it does in water.',
-    'Jupiter is the closest planet to the Sun',
-    'An adult human skeleton has more bones than a baby\'s skeleton',
+  List<Questions> questionBank = [
+    Questions(
+      qText: 'Mount Everest is the tallest mountain in the world',
+      ans: true,
+    ),
+    Questions(
+      qText:
+          'The Great Wall of China can be seen from the Moon with the naked eye.',
+      ans: false,
+    ),
+    Questions(qText: 'The capital city of Australia is Sydney', ans: false),
+    Questions(
+      qText: 'Sound travels faster in air than it does in water.',
+      ans: false,
+    ),
+    Questions(qText: 'Jupiter is the closest planet to the Sun', ans: false),
+    Questions(
+      qText: 'An adult human skeleton has more bones than a baby\'s skeleton',
+      ans: false,
+    ),
   ];
-  List<bool> answers = [true, false, false, false, false, false];
   //TODO: Add a score keeper
-  List<Icons> score = [];
+  List<Icon> score = [];
 
   int questionNumber = 0;
   @override
@@ -51,7 +64,7 @@ class _QuizState extends State<Quiz> {
             padding: EdgeInsets.all(10),
             child: Center(
               child: Text(
-                questions[questionNumber],
+                questionBank[questionNumber].qText, //IMP!!!
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 25.0, color: Colors.white),
               ),
@@ -64,14 +77,16 @@ class _QuizState extends State<Quiz> {
             child: TextButton(
               style: TextButton.styleFrom(backgroundColor: Colors.green),
               onPressed: () {
-                bool correctAnswer = answers[questionNumber];
-                if(correctAnswer == true){
+                bool correctAnswer = questionBank[questionNumber].ans;
+                if (correctAnswer == true) {
                   print('Correct');
-                }else{
+                } else {
                   print('Incorrect');
                 }
                 setState(() {
-                  questionNumber++;
+                  if (questionNumber < questionBank.length - 1) {
+                    questionNumber++;
+                  }
                 });
               },
               child: Text(
@@ -87,16 +102,17 @@ class _QuizState extends State<Quiz> {
             child: TextButton(
               style: TextButton.styleFrom(backgroundColor: Colors.red),
               onPressed: () {
-                bool correctAnswer = answers[questionNumber];
-                if(correctAnswer == true){
+                bool correctAnswer = questionBank[questionNumber].ans;
+                if (correctAnswer == true) {
                   print('Incorrect');
-                }else{
+                } else {
                   print('Correct');
                 }
                 setState(() {
-                  questionNumber++;
+                  if (questionNumber < questionBank.length - 1) {
+                    questionNumber++;
+                  }
                 });
-                print(questionNumber);
               },
               child: Text(
                 'False',
